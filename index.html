@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cinmee Nerds</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --black: #060B18;
+    --violet: #7C3AED;
+    --blue: #4F8EF7;
+    --red: #EF4444;
+    --green: #22C55E;
+  }
+  body {
+    background: var(--black);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(124,58,237,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,58,237,0.07) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: gridMove 20s linear infinite;
+    z-index: 0;
+  }
+  @keyframes gridMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 40px 40px; }
+  }
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    z-index: 0;
+    animation: float 8s ease-in-out infinite;
+  }
+  .orb1 { width: 300px; height: 300px; background: var(--violet); top: -100px; left: -100px; }
+  .orb2 { width: 200px; height: 200px; background: var(--blue); bottom: -50px; right: -50px; animation-delay: -4s; }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(20px, 20px); }
+  }
+  .container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    animation: fadeDown 0.6s ease both;
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .avatar-ring {
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(135deg, var(--violet), var(--blue));
+  }
+  .avatar-inner {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+  }
+  .name {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+  .name span { color: var(--violet); }
+  .tagline {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .stats {
+    display: flex;
+    gap: 16px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 12px 24px;
+    animation: fadeDown 0.6s 0.1s ease both;
+    opacity: 0;
+  }
+  .stat { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .stat-num {
+    font-family: 'Orbitron', monospace;
+    font-size: 15px; font-weight: 700;
+    color: var(--green);
+  }
+  .stat-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .stat-divider { width: 1px; background: rgba(255,255,255,0.1); align-self: stretch; }
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: fadeDown 0.6s 0.2s ease both;
+    opacity: 0;
+  }
+  .section-label::before, .section-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: rgba(255,255,255,0.08);
+  }
+  .links-wrapper { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+  .link-card {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    opacity: 0;
+  }
+  .link-card:nth-child(1) { animation: fadeUp 0.5s 0.3s ease both; }
+  .link-card:nth-child(2) { animation: fadeUp 0.5s 0.4s ease both; }
+  .link-card:nth-child(3) { animation: fadeUp 0.5s 0.5s ease both; }
+  .link-card:nth-child(4) { animation: fadeUp 0.5s 0.6s ease both; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .link-card:hover { transform: translateY(-2px) scale(1.01); }
+  .card-amazon {
+    background: rgba(255,153,0,0.08);
+    border: 1px solid rgba(255,153,0,0.25);
+    box-shadow: 0 4px 20px rgba(255,153,0,0.05);
+  }
+  .card-amazon:hover { box-shadow: 0 8px 30px rgba(255,153,0,0.15); border-color: rgba(255,153,0,0.5); }
+  .card-fb {
+    background: rgba(79,142,247,0.08);
+    border: 1px solid rgba(79,142,247,0.25);
+  }
+  .card-fb:hover { box-shadow: 0 8px 30px rgba(79,142,247,0.15); border-color: rgba(79,142,247,0.5); }
+  .card-market {
+    background: rgba(34,197,94,0.08);
+    border: 1px solid rgba(34,197,94,0.25);
+  }
+  .card-market:hover { box-shadow: 0 8px 30px rgba(34,197,94,0.15); border-color: rgba(34,197,94,0.5); }
+  .card-collab {
+    background: rgba(124,58,237,0.08);
+    border: 1px solid rgba(124,58,237,0.25);
+  }
+  .card-collab:hover { box-shadow: 0 8px 30px rgba(124,58,237,0.15); border-color: rgba(124,58,237,0.5); }
+  .card-icon { font-size: 26px; min-width: 40px; text-align: center; }
+  .card-text { flex: 1; }
+  .card-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px; font-weight: 600;
+    color: #fff; letter-spacing: 0.5px;
+  }
+  .card-sub { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 1px; }
+  .card-arrow {
+    font-size: 18px;
+    color: rgba(255,255,255,0.2);
+    transition: color 0.2s, transform 0.2s;
+  }
+  .link-card:hover .card-arrow { color: rgba(255,255,255,0.6); transform: translateX(3px); }
+  .badge {
+    font-size: 9px; padding: 2px 7px;
+    border-radius: 20px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .badge-hot { background: var(--red); color: #fff; }
+  .badge-new { background: var(--green); color: #000; }
+  .card-girls {
+    background: rgba(236,72,153,0.08);
+    border: 1px solid rgba(236,72,153,0.25);
+  }
+  .card-girls:hover { box-shadow: 0 8px 30px rgba(236,72,153,0.15); border-color: rgba(236,72,153,0.5); }
+  .badge-girls { background: #EC4899; color: #fff; }
+  .footer {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    text-align: center;
+    margin-top: 8px;
+    letter-spacing: 1px;
+    animation: fadeUp 0.5s 0.8s ease both;
+    opacity: 0;
+  }
+  .footer span { color: var(--violet); }
+</style>
+</head>
+<body>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="container">
+  <div class="profile">
+    <div class="avatar-ring">
+      <div class="avatar-inner">🎬</div>
+    </div>
+    <div class="name">CINMEE <span>NERDS</span></div>
+    <div class="tagline">Anime · Cinema · Tech · Markets</div>
+  </div>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">11K+</div>
+      <div class="stat-label">Followers</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-num">7.6M</div>
+      <div class="stat-label">Views</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-num">346K</div>
+      <div class="stat-label">Engaged</div>
+    </div>
+  </div>
+  <div class="section-label">My Picks</div>
+  <div class="links-wrapper">
+    <a href="https://amzn.to/4uh104k" target="_blank" class="link-card card-amazon">
+      <div class="card-icon">🛒</div>
+      <div class="card-text">
+        <div class="card-title">Doraemon Charger Cable <span class="badge badge-hot">HOT</span></div>
+        <div class="card-sub">Anime themed · Amazon.in</div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+    <a href="https://www.facebook.com/cinmeenerds" target="_blank" class="link-card card-fb">
+      <div class="card-icon">📘</div>
+      <div class="card-text">
+        <div class="card-title">Follow on Facebook</div>
+        <div class="card-sub">Reels · Anime · Cinema content</div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+    <a href="https://www.facebook.com/cinmeenerds" target="_blank" class="link-card card-market">
+      <div class="card-icon">📊</div>
+      <div class="card-text">
+        <div class="card-title">MarketNerd AI <span class="badge badge-new">NEW</span></div>
+        <div class="card-sub">Economy · Stocks · AI News Reels</div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+    <a href="mailto:pgolukushwaha46@gmail.com" class="link-card card-collab">
+      <div class="card-icon">✉️</div>
+      <div class="card-text">
+        <div class="card-title">Brand Deals & Collabs</div>
+        <div class="card-sub">Mail karo for collaborations</div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+  </div>
+  <div class="section-label" style="animation-delay:0.65s">For Girls</div>
+  <div class="links-wrapper">
+    <a href="https://fktr.in/3sb0cHV" target="_blank" class="link-card card-girls" style="animation: fadeUp 0.5s 0.7s ease both; opacity:0;">
+      <div class="card-icon">👗</div>
+      <div class="card-text">
+        <div class="card-title">Girls Special Pick <span class="badge badge-girls">GIRLS</span></div>
+        <div class="card-sub">Handpicked for you · Flipkart</div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+  </div>
+
+  <div class="footer">made with ❤️ by <span>@cinmeenerds</span></div>
+</div>
+</body>
+</html>
